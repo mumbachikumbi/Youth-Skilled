@@ -1,195 +1,387 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Youth Skilled - View F.A.Q.</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-dark: #0f2027;
-            --bg-dark2: #203a43;
-            --primary: linear-gradient(90deg, #00f5ff, #00ff88);
-            --accent: #00ff88;
-            --card-bg: rgba(255, 255, 255, 0.05);
-            --light-bg: rgba(255, 255, 255, 0.1);
-            --border-radius: 10px;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Youth Skilled - View F.A.Q.</title>
 
-        * {
-            box-sizing: border-box;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-        body {
-            margin: 0;
-            font-family: 'Poppins', sans-serif;
-            background: var(--bg-dark);
-            color: white;
-            overflow-x: hidden;
-        }
+<style>
 
-        /* Navbar */
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 5%;
-            position: fixed;
-            width: 100%;
-            backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.05);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            z-index: 1000;
-        }
+:root{
+    --bg-dark:#0f2027;
+    --bg-dark2:#203a43;
+    --primary:linear-gradient(90deg,#00f5ff,#00ff88);
+    --light-bg:rgba(255,255,255,.08);
+    --radius:12px;
+}
 
-        .logo {
-            font-size: 22px;
-            font-weight: 700;
-            background: var(--primary);
-            -webkit-background-clip: text;
-            color: transparent;
-        }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-        .nav-links {
-            display: flex;
-            gap: 25px;
-            flex-wrap: wrap;
-        }
+body{
+    font-family:'Poppins',sans-serif;
+    background:linear-gradient(135deg,var(--bg-dark),var(--bg-dark2));
+    color:white;
+    overflow-x:hidden;
+}
 
-        .nav-links a {
-            text-decoration: none;
-            color: white;
-            font-weight: 500;
-            white-space: nowrap;
-            position: relative;
-            transition: 0.3s;
-        }
+/* ---------------- NAVBAR ---------------- */
 
-        .nav-links a:hover {
-            transform: translateY(-2px);
-            text-shadow: 0 0 10px #00ff88, 0 0 15px #00f5ff;
-        }
+nav{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 5%;
+    backdrop-filter:blur(12px);
+    background:rgba(0,0,0,.25);
+    border-bottom:1px solid rgba(255,255,255,.1);
+    z-index:1000;
+}
 
-        /* Content */
-        .content {
-            margin-top: 80px;
-            padding: 40px;
-            background: rgba(0, 0, 0, 0.15);
-            border-radius: var(--border-radius);
-            margin-bottom: 60px;
-        }
+.logo{
+    font-size:24px;
+    font-weight:700;
+    background:var(--primary);
+    -webkit-background-clip:text;
+    color:transparent;
+}
 
-        /* F.A.Q. Section */
-        .faq-section {
-            margin-bottom: 40px;
-        }
+.nav-links{
+    display:flex;
+    gap:25px;
+    flex-wrap:wrap;
+}
 
-        .faq-header {
-            font-size: 26px;
-            margin-bottom: 20px;
-            background: var(--primary);
-            -webkit-background-clip: text;
-            color: transparent;
-        }
+.nav-links a{
+    color:white;
+    text-decoration:none;
+    transition:.3s;
+    font-weight:500;
+}
 
-        .faq-item {
-            margin-bottom: 15px;
-            border-radius: var(--border-radius);
-            background: var(--light-bg);
-            padding: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            cursor: pointer;
-            transition: 0.3s ease;
-        }
+.nav-links a:hover{
+    color:#00ff88;
+    transform:translateY(-2px);
+}
 
-        .faq-item:hover {
-            transform: scale(1.02);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-        }
+/* ---------------- CONTENT ---------------- */
 
-        .faq-question {
-            font-weight: 600;
-            font-size: 18px;
-            margin: 0;
-            color: #fff;
-            cursor: pointer;
-        }
+.content{
+    max-width:1000px;
+    margin:auto;
+    margin-top:130px;
+    margin-bottom:60px;
+    padding:20px;
+}
 
-        .faq-answer {
-            display: none;
-            margin-top: 10px;
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            font-size: 16px;
-            color: #bbb;
-        }
+.faq-header{
+    font-size:34px;
+    text-align:center;
+    margin-bottom:35px;
+    background:var(--primary);
+    -webkit-background-clip:text;
+    color:transparent;
+}
 
-    </style>
+/* ---------------- FAQ ---------------- */
+
+.faq-item{
+    background:var(--light-bg);
+    border-radius:var(--radius);
+    margin-bottom:20px;
+    overflow:hidden;
+    cursor:pointer;
+    transition:.3s;
+    box-shadow:0 5px 20px rgba(0,0,0,.15);
+}
+
+.faq-item:hover{
+    transform:translateY(-2px);
+}
+
+.faq-question{
+    padding:18px 22px;
+    font-size:19px;
+    font-weight:600;
+}
+
+.faq-answer{
+    display:none;
+    padding:0 22px 22px;
+    color:#ddd;
+    line-height:1.8;
+    animation:fade .3s ease;
+}
+
+.faq-answer p{
+    margin-bottom:15px;
+}
+
+.faq-answer strong{
+    color:#fff;
+}
+
+.faq-answer ul{
+    margin:15px 0;
+    padding-left:25px;
+    list-style:disc;
+}
+
+.faq-answer li{
+    margin:8px 0;
+}
+
+@keyframes fade{
+
+from{
+opacity:0;
+transform:translateY(-8px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+/* ---------------- TABLETS ---------------- */
+
+@media (max-width:900px){
+
+.content{
+    margin-top:140px;
+}
+
+.faq-header{
+    font-size:30px;
+}
+
+.faq-question{
+    font-size:18px;
+}
+
+}
+
+/* ---------------- PHONES ---------------- */
+
+@media (max-width:700px){
+
+nav{
+    flex-direction:column;
+    gap:15px;
+    padding:18px;
+}
+
+.logo{
+    font-size:22px;
+}
+
+.nav-links{
+    justify-content:center;
+    gap:18px;
+}
+
+.content{
+    margin-top:170px;
+    padding:15px;
+}
+
+.faq-header{
+    font-size:28px;
+}
+
+.faq-question{
+    font-size:17px;
+}
+
+.faq-answer{
+    font-size:15px;
+}
+
+}
+
+/* ---------------- SMALL PHONES ---------------- */
+
+@media (max-width:420px){
+
+.nav-links{
+    gap:12px;
+}
+
+.nav-links a{
+    font-size:14px;
+}
+
+.logo{
+    font-size:20px;
+}
+
+.content{
+    margin-top:180px;
+}
+
+.faq-header{
+    font-size:24px;
+}
+
+.faq-question{
+    font-size:16px;
+}
+
+}
+
+</style>
 </head>
+
 <body>
 
 <nav>
-    <div class="logo">Youth Skilled</div>
-    <div class="nav-links">
-        <a href="#">Home</a>
-        <a href="#">Dashboard</a>
-        <a href="profile.html">Profile</a>
-        <a href="#">Logout</a>
-    </div>
+
+<div class="logo">Youth Skilled</div>
+
+<div class="nav-links">
+<a href="#">Home</a>
+<a href="#">Dashboard</a>
+<a href="profile.html">Profile</a>
+<a href="#">Logout</a>
+</div>
+
 </nav>
 
 <div class="content">
 
-    <!-- F.A.Q. Section -->
-    <div class="faq-section">
-        <h2 class="faq-header">Frequently Asked Questions</h2>
+<h2 class="faq-header">Frequently Asked Questions</h2>
 
-        <div class="faq-item" onclick="toggleAnswer('answer1')">
-            <div class="faq-question">What courses do you offer?</div>
-            <div id="answer1" class="faq-answer">
-                We offer a variety of courses in Web Development, AI & Machine Learning, Cyber Security, and Digital Marketing.
-            </div>
-        </div>
+<div class="faq-item" onclick="toggleAnswer('answer1')">
 
-        <div class="faq-item" onclick="toggleAnswer('answer2')">
-            <div class="faq-question">How can I enroll in a course?</div>
-            <div id="answer2" class="faq-answer">
-                Simply click on the course you want to enroll in from your dashboard and follow the instructions.
-            </div>
-        </div>
+<div class="faq-question">
+How does Youth Skilled work?
+</div>
 
-        <div class="faq-item" onclick="toggleAnswer('answer3')">
-            <div class="faq-question">Do you offer certificates?</div>
-            <div id="answer3" class="faq-answer">
-                Yes, we provide certificates upon successful completion of our courses.
-            </div>
-        </div>
+<div id="answer1" class="faq-answer">
 
-        <div class="faq-item" onclick="toggleAnswer('answer4')">
-            <div class="faq-question">What is the course duration?</div>
-            <div id="answer4" class="faq-answer">
-                Course durations vary depending on the course, but typically range from 4 to 12 weeks.
-            </div>
-        </div>
+<p>
+Users learn a skill, take an assessment to get verified and then choose to showcase their services.
+Clients can then find and hire them based on their skills, reviews and location.
+</p>
 
-        <div class="faq-item" onclick="toggleAnswer('answer5')">
-            <div class="faq-question">Can I get a refund?</div>
-            <div id="answer5" class="faq-answer">
-                Yes, we offer a 30-day refund policy if you are not satisfied with the course.
-            </div>
-        </div>
+</div>
 
-    </div>
+</div>
+
+<div class="faq-item" onclick="toggleAnswer('answer2')">
+
+<div class="faq-question">
+Who is Youth Skilled for?
+</div>
+
+<div id="answer2" class="faq-answer">
+
+<p>Youth Skilled is designed for:</p>
+
+<ul>
+<li>People who want to learn practical, income-generating skills.</li>
+<li>Skilled individuals who want to showcase their services.</li>
+<li>Clients and businesses looking to hire trusted, verified talent.</li>
+</ul>
+
+<p>
+It is designed to be used every day by anyone involved in skills development and employment.
+</p>
+
+</div>
+
+</div>
+
+<div class="faq-item" onclick="toggleAnswer('answer3')">
+
+<div class="faq-question">
+What do the badges mean?
+</div>
+
+<div id="answer3" class="faq-answer">
+
+<p><strong>🔵 Blue YS Badge</strong></p>
+
+<p>
+Awarded to users who complete a Youth Skilled course, pass the assessment and choose to list themselves as service providers.
+</p>
+
+<p><strong>🟢 Green YS Badge</strong></p>
+
+<p>
+Awarded to skilled individuals who did not take a Youth Skilled course but passed a competency assessment to verify their skills before offering services.
+</p>
+
+<p>
+<strong>Both badges confirm that a person's skills have been verified.</strong>
+</p>
+
+</div>
+
+</div>
+
+<div class="faq-item" onclick="toggleAnswer('answer4')">
+
+<div class="faq-question">
+What skills or services are available?
+</div>
+
+<div id="answer4" class="faq-answer">
+
+<p>
+Youth Skilled supports a wide range of practical and digital skills, including:
+</p>
+
+<ul>
+<li>Tailoring and Fashion Design</li>
+<li>Hair Braiding and Beauty Services</li>
+<li>Baking and Catering</li>
+<li>Graphic Design</li>
+<li>Web and App Development</li>
+<li>Photography and Videography</li>
+<li>Mobile Phone Repair</li>
+<li>Digital Marketing and Social Media Management</li>
+</ul>
+
+<p>
+Some of these skills are available as Youth Skilled courses, while others may only be offered by verified service providers.
+</p>
+
+<p>
+This allows clients to discover and hire trusted skilled individuals, even when a particular skill is not offered as a course on the platform.
+</p>
+
+</div>
+
+</div>
 
 </div>
 
 <script>
-// F.A.Q. Toggle
-function toggleAnswer(answerId) {
-    const answer = document.getElementById(answerId);
-    answer.style.display = answer.style.display === "none" || answer.style.display === "" ? "block" : "none";
+
+function toggleAnswer(id){
+
+const answer=document.getElementById(id);
+
+if(answer.style.display==="block"){
+answer.style.display="none";
+}else{
+answer.style.display="block";
 }
+
+}
+
 </script>
 
 </body>
