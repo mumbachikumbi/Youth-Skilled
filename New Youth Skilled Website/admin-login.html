@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login - Youth Skilled</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: white;
+}
+.login-container {
+    background: rgba(0,0,0,0.4);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    width: 350px;
+    text-align: center;
+}
+.login-container h2 {
+    margin-bottom: 30px;
+    background: linear-gradient(90deg, #00f5ff, #00ff88);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+.login-container input[type="email"],
+.login-container input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+}
+.login-container input:focus {
+    outline: none;
+    box-shadow: 0 0 10px #00f5ff;
+}
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0;
+    right: 0; bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 24px;
+}
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px; width: 20px;
+    left: 2px; bottom: 2px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+input:checked + .slider {
+    background: linear-gradient(90deg, #00f5ff, #00ff88);
+}
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+.login-container button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #00f5ff, #00ff88);
+    color: black;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    position: relative;
+}
+.login-container button:hover {
+    transform: scale(1.05);
+}
+button.loading::after {
+    content: "";
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 2px solid white;
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    width: 16px; height: 16px;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    0% { transform: translateY(-50%) rotate(0deg); }
+    100% { transform: translateY(-50%) rotate(360deg); }
+}
+.error-message {
+    color: #ff4d4d;
+    margin-bottom: 10px;
+    display: none;
+}
+label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+</style>
+</head>
+<body>
+
+<div class="login-container">
+    <h2>Admin Login</h2>
+    <div class="error-message" id="errorMsg"></div>
+    <input type="email" id="email" placeholder="Admin Email" required>
+    <input type="password" id="password" placeholder="Password" required>
+
+    <label>
+        Stay logged in
+        <span class="toggle-switch">
+            <input type="checkbox" id="stayLoggedIn">
+            <span class="slider"></span>
+        </span>
+    </label>
+
+    <button type="button" id="loginBtn">Login</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// Initialize Supabase
+if (!window.supabaseClient) {
+    window.supabaseClient = supabase.createClient(
+        "https://fwvuvfiqaxmtpyxmwiih.supabase.co",
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ3dnV2ZmlxYXhtdHB5eG13aWloIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMzMTMwOTMsImV4cCI6MjA4ODg4OTA5M30.jYOdMzA2UL6ifNUMhleJq6yfL4CNTehkR-dDjnMwf0Y"
+    );
+}
+
+const supabaseClient = window.supabaseClient;
+
+document.addEventListener("DOMContentLoaded", () => {
+    const loginBtn = document.getElementById("loginBtn");
+    const errorMsg = document.getElementById("errorMsg");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+
+    [emailInput, passwordInput].forEach(input => {
+        input.addEventListener("input", () => {
+            errorMsg.style.display = "none";
+            errorMsg.textContent = "";
+        });
+    });
+
+    loginBtn.addEventListener("click", async () => {
+        const email = emailInput.value.trim();
+        const password = passwordInput.value.trim();
+        const stayLoggedIn = document.getElementById("stayLoggedIn").checked;
+
+        if (!email || !password) {
+            errorMsg.textContent = "Please fill in all fields.";
+            errorMsg.style.display = "block";
+            return;
+        }
+
+        loginBtn.disabled = true;
+        loginBtn.classList.add("loading");
+
+        try {
+            console.log("Attempting login");
+
+            // Sign in
+            const { data: loginData, error: loginError } = await supabaseClient.auth.signInWithPassword({ email, password });
+
+            if (loginError) {
+                if (loginError.message.includes("Email not confirmed")) {
+                    throw new Error("Please confirm your email before logging in.");
+                } else {
+                    throw loginError;
+                }
+            }
+
+            if (!loginData.session || !loginData.session.user) throw new Error("Invalid login credentials");
+
+            // Set the session immediately so RLS works
+            await supabaseClient.auth.setSession(loginData.session);
+
+            const userId = loginData.session.user.id;
+
+            // Query profiles table by user ID
+            const { data: profileData, error: profileError } = await supabaseClient
+                .from('profiles')
+                .select('role')
+                .eq('id', userId)
+                .single();
+
+            if (profileError || !profileData) throw new Error("Could not verify role");
+            if (profileData.role !== 'admin') {
+                errorMsg.textContent = "Access denied. Admins only.";
+                errorMsg.style.display = "block";
+                await supabaseClient.auth.signOut();
+                return;
+            }
+
+            // Successful login
+            window.location.href = "admin.html";
+
+        } catch (err) {
+            console.error(err);
+            errorMsg.textContent = err.message || "Login failed";
+            errorMsg.style.display = "block";
+        } finally {
+            loginBtn.disabled = false;
+            loginBtn.classList.remove("loading");
+        }
+    });
+});
+</script>
+
+</body>
+</html>

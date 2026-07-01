@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Youth Skilled - Courses</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f2027;
+            --primary: linear-gradient(90deg, #00f5ff, #00ff88);
+            --accent: #00ff88;
+            --modal-bg: rgba(0, 0, 0, 0.8);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-dark);
+            color: white;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        h2 {
+            background: var(--primary);
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .filter-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .filter-container select {
+            padding: 10px;
+            border-radius: 10px;
+            background: var(--bg-dark);
+            color: white;
+            border: 1px solid var(--primary);
+        }
+
+        .course-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .course-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .course-card h3 {
+            margin-bottom: 15px;
+            background: var(--primary);
+            -webkit-background-clip: text;
+            color: transparent;
+            font-size: 22px;
+        }
+
+        .course-card p {
+            font-size: 16px;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .course-card button {
+            padding: 10px 25px;
+            border-radius: 30px;
+            border: none;
+            background: var(--primary);
+            color: black;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .course-card button:hover {
+            transform: scale(1.05);
+        }
+
+        .enrolled {
+            background-color: #00ff88;
+            color: black;
+            font-weight: bold;
+            cursor: not-allowed;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            width: 0%;
+            background: var(--accent);
+            border-radius: 10px;
+            transition: 1s;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--modal-bg);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #fff;
+            color: black;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 80%;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .certificate {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            padding: 20px;
+            background: var(--primary);
+            border-radius: 15px;
+            color: black;
+            font-weight: bold;
+        }
+
+        .certificate img {
+            width: 100%;
+            max-width: 300px;
+            margin-top: 20px;
+        }
+
+        /* Responsive */
+        @media(max-width: 768px) {
+            .course-card {
+                padding: 20px;
+                font-size: 14px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Available Courses</h2>
+
+    <!-- Filter Courses -->
+    <div class="filter-container">
+        <select id="courseFilter">
+            <option value="all">All Courses</option>
+            <option value="development">Web Development</option>
+            <option value="ai">AI & Machine Learning</option>
+            <option value="cyber">Cyber Security</option>
+            <option value="marketing">Digital Marketing</option>
+        </select>
+    </div>
+
+    <div class="course-list" id="courseList">
+        <!-- Courses will be dynamically populated here -->
+    </div>
+</div>
+
+<!-- Modal for Course Details -->
+<div id="courseModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" id="closeModal">&times;</span>
+        <h2 id="courseTitle"></h2>
+        <p id="courseDescription"></p>
+        <button id="enrollBtn">Enroll Now</button>
+    </div>
+</div>
+
+<!-- Certificate Simulation -->
+<div id="certificate" class="certificate">
+    <h3>Congratulations!</h3>
+    <p>You have successfully completed the course!</p>
+    <img src="https://via.placeholder.com/300x200.png?text=Certificate" alt="Certificate Image">
+    <button onclick="downloadCertificate()">Download Certificate</button>
+</div>
+
+<script>
+    // Define course data (this would usually come from an API or database)
+    const courses = [
+        { id: 1, title: "Web Development", category: "development", description: "Learn HTML, CSS, and JavaScript to build modern websites.", enrolled: false, progress: 0 },
+        { id: 2, title: "AI & Machine Learning", category: "ai", description: "Understand the fundamentals of AI and build intelligent applications.", enrolled: false, progress: 0 },
+        { id: 3, title: "Cyber Security", category: "cyber", description: "Learn to protect systems, networks, and data from attacks.", enrolled: false, progress: 0 },
+        { id: 4, title: "Digital Marketing", category: "marketing", description: "Master SEO, social media marketing, and content strategies.", enrolled: false, progress: 0 }
+    ];
+
+    // Load courses and display them
+    function loadCourses(filter = 'all') {
+        const courseListContainer = document.getElementById("courseList");
+        courseListContainer.innerHTML = '';  // Clear existing courses
+
+        const filteredCourses = filter === 'all' ? courses : courses.filter(course => course.category === filter);
+        filteredCourses.forEach(course => {
+            const courseCard = document.createElement('div');
+            courseCard.className = 'course-card';
+            courseCard.innerHTML = `
+                <h3>${course.title}</h3>
+                <p>${course.description}</p>
+                <div class="progress-bar">
+                    <div class="progress" style="width: ${course.progress}%;"></div>
+                </div>
+                <button class="${course.enrolled ? 'enrolled' : ''}" ${course.enrolled ? 'disabled' : ''}>${course.enrolled ? 'Enrolled' : 'Enroll Now'}</button>
+            `;
+            courseCard.querySelector('button').addEventListener('click', () => enrollCourse(course.id));
+            courseCard.addEventListener('click', () => showCourseDetails(course.id));
+            courseListContainer.appendChild(courseCard);
+        });
+    }
+
+    // Enroll a user in a course
+    function enrollCourse(courseId) {
+        const course = courses.find(c => c.id === courseId);
+        if (!course.enrolled) {
+            course.enrolled = true;
+            course.progress = 0;
+            loadCourses(document.getElementById('courseFilter').value);
+        }
+    }
+
+    // Show course details in modal
+    function showCourseDetails(courseId) {
+        const course = courses.find(c => c.id === courseId);
+        document.getElementById('courseTitle').textContent = course.title;
+        document.getElementById('courseDescription').textContent = course.description;
+        document.getElementById('enrollBtn').textContent = course.enrolled ? 'Enrolled' : 'Enroll Now';
+        document.getElementById('enrollBtn').disabled = course.enrolled;
+        document.getElementById('courseModal').style.display = 'flex';
+    }
+
+    // Close course modal
+    document.getElementById('closeModal').addEventListener('click', () => {
+        document.getElementById('courseModal').style.display = 'none';
+    });
+
+    // Filter courses based on category
+    document.getElementById('courseFilter').addEventListener('change', (event) => {
+        loadCourses(event.target.value);
+    });
+
+    // Simulate course completion (for demo purposes)
+    function simulateCourseCompletion() {
+        const course = courses[0];  // Example course
+        course.progress = 100; // Set progress to 100%
+        loadCourses();  // Re-render courses
+        document.getElementById('certificate').style.display = 'block';  // Show certificate
+    }
+
+    // Download certificate (mock functionality)
+    function downloadCertificate() {
+        alert('Certificate downloaded!');
+    }
+
+    // Load courses initially
+    loadCourses();
+</script>
+
+</body>
+</html>

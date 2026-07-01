@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Youth Skilled - My Certificates</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f2027;
+            --primary: linear-gradient(90deg, #00f5ff, #00ff88);
+            --accent: #00ff88;
+            --modal-bg: rgba(0, 0, 0, 0.8);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-dark);
+            color: white;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        h2 {
+            background: var(--primary);
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .certificate-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .certificate-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: 0.3s;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .certificate-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .certificate-card h3 {
+            margin-bottom: 15px;
+            background: var(--primary);
+            -webkit-background-clip: text;
+            color: transparent;
+            font-size: 22px;
+        }
+
+        .certificate-card p {
+            font-size: 16px;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .certificate-card img {
+            width: 100%;
+            max-width: 300px;
+            margin-bottom: 20px;
+        }
+
+        .certificate-card button {
+            padding: 10px 25px;
+            border-radius: 30px;
+            border: none;
+            background: var(--primary);
+            color: black;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .certificate-card button:hover {
+            transform: scale(1.05);
+        }
+
+        .no-certificates {
+            text-align: center;
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Responsive */
+        @media(max-width: 768px) {
+            .certificate-card {
+                padding: 20px;
+                font-size: 14px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>My Certificates</h2>
+
+    <!-- Certificates Gallery -->
+    <div id="certificateGallery" class="certificate-gallery">
+        <!-- Certificates will be dynamically populated here -->
+    </div>
+
+    <!-- No Certificates Message -->
+    <div id="noCertificates" class="no-certificates" style="display: none;">
+        You haven't completed any courses yet.
+    </div>
+</div>
+
+<script>
+    // Define user courses and certificates
+    const courses = [
+        { id: 1, title: "Web Development", category: "development", description: "Learn HTML, CSS, and JavaScript to build modern websites.", enrolled: true, progress: 100, certificateIssued: false },
+        { id: 2, title: "AI & Machine Learning", category: "ai", description: "Understand the fundamentals of AI and build intelligent applications.", enrolled: true, progress: 40, certificateIssued: false },
+        { id: 3, title: "Cyber Security", category: "cyber", description: "Learn to protect systems, networks, and data from attacks.", enrolled: true, progress: 100, certificateIssued: false },
+        { id: 4, title: "Digital Marketing", category: "marketing", description: "Master SEO, social media marketing, and content strategies.", enrolled: true, progress: 20, certificateIssued: false }
+    ];
+
+    // Load certificates that are completed (progress = 100)
+    function loadCertificates() {
+        const certificateGallery = document.getElementById('certificateGallery');
+        const noCertificates = document.getElementById('noCertificates');
+        certificateGallery.innerHTML = ''; // Clear existing certificates
+
+        // Filter completed courses
+        const completedCourses = courses.filter(course => course.progress === 100);
+
+        if (completedCourses.length === 0) {
+            noCertificates.style.display = 'block';
+        } else {
+            noCertificates.style.display = 'none';
+            completedCourses.forEach(course => {
+                const certificateCard = document.createElement('div');
+                certificateCard.className = 'certificate-card';
+                certificateCard.innerHTML = `
+                    <h3>${course.title}</h3>
+                    <img src="https://via.placeholder.com/300x200.png?text=Certificate" alt="Certificate Image">
+                    <p>Completed on: ${new Date().toLocaleDateString()}</p>
+                    <button onclick="downloadCertificate('${course.title}')">Download Certificate</button>
+                `;
+                certificateGallery.appendChild(certificateCard);
+            });
+        }
+    }
+
+    // Simulate downloading the certificate
+    function downloadCertificate(courseTitle) {
+        alert(`${courseTitle} certificate is downloaded!`);
+    }
+
+    // Load certificates on page load
+    loadCertificates();
+
+</script>
+
+</body>
+</html>
