@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Youth Skilled - Profile</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+    --bg-dark:#0f2027;
+    --primary:linear-gradient(90deg,#00f5ff,#00ff88);
+    --accent:#00ff88;
+    --border-color:#00f5ff;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+body{
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    background:var(--bg-dark);
+    color:white;
+}
+
+/* NAVBAR */
+nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 5%;
+    backdrop-filter:blur(10px);
+    background:rgba(255,255,255,0.05);
+    border-bottom:1px solid rgba(255,255,255,0.1);
+}
+.logo{
+    font-size:22px;
+    font-weight:700;
+    background:var(--primary);
+    -webkit-background-clip:text;
+    color:transparent;
+}
+.nav-links{
+    display:flex;
+    gap:25px;
+}
+.nav-links a{
+    text-decoration:none;
+    color:white;
+    font-weight:500;
+    transition:0.3s;
+}
+.nav-links a:hover{
+    transform:translateY(-2px);
+    text-shadow:0 0 10px #00ff88,0 0 15px #00f5ff;
+}
+
+/* PROFILE CONTAINER */
+.profile-container{
+    max-width:800px;
+    margin:80px auto 40px;
+    background:rgba(255,255,255,0.1);
+    backdrop-filter:blur(20px);
+    padding:40px;
+    border-radius:25px;
+    box-shadow:0 10px 30px var(--shadow-color);
+    text-align:left;
+    display:flex;
+    flex-wrap:wrap;
+    gap:40px;
+}
+.profile-container h2{
+    background:var(--primary);
+    -webkit-background-clip:text;
+    color:transparent;
+    margin-bottom:20px;
+    text-align:center;
+    width:100%;
+}
+
+/* Left Panel - Avatar & Stats */
+.left-panel{
+    width:100%;
+    max-width:300px;
+    text-align:center;
+}
+.avatar-container{
+    position:relative;
+    margin-bottom:20px;
+}
+.avatar-container img{
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    object-fit:cover;
+    border:4px solid var(--accent);
+    margin-bottom:10px;
+}
+.avatar-container input{
+    position:absolute;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+    opacity:0;
+    width:120px;
+    height:120px;
+    cursor:pointer;
+}
+.profile-stats{
+    background:rgba(255,255,255,0.1);
+    padding:20px;
+    border-radius:20px;
+    box-shadow:0 5px 15px var(--shadow-color);
+    text-align:center;
+}
+.profile-stats p{
+    font-size:18px;
+    margin:10px 0;
+}
+
+/* Right Panel - Editable Fields */
+.right-panel{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+.profile-field{
+    display:flex;
+    flex-direction:column;
+}
+.profile-field label{
+    font-size:14px;
+    margin-bottom:5px;
+    font-weight:600;
+}
+.profile-field input{
+    padding:12px 15px;
+    font-size:16px;
+    border-radius:30px;
+    border:none;
+    outline:none;
+    background:rgba(255,255,255,0.1);
+    color:white;
+    transition:0.3s;
+}
+.profile-field input:focus{
+    background:rgba(255,255,255,0.2);
+}
+.profile-field input.invalid{
+    border:2px solid #ff4d4d;
+}
+
+.show-password{
+    font-size:14px;
+    margin-top:10px;
+    display:flex;
+    align-items:center;
+    gap:5px;
+}
+
+/* Save Button */
+.btn{
+    padding:14px 30px;
+    border:none;
+    border-radius:30px;
+    background:var(--primary);
+    color:black;
+    font-weight:600;
+    font-size:16px;
+    cursor:pointer;
+    margin-top:20px;
+    transition:0.3s;
+}
+.btn:hover{
+    transform:scale(1.05);
+}
+
+/* Toast notification */
+.toast{
+    position:fixed;
+    bottom:20px;
+    left:50%;
+    transform:translateX(-50%);
+    background:var(--accent);
+    color:black;
+    padding:15px 25px;
+    border-radius:25px;
+    display:none;
+    font-weight:600;
+    z-index:10000;
+}
+
+/* Mobile Responsiveness */
+@media(max-width:768px){
+    .profile-container{padding:20px 10px;}
+    .left-panel{width:100%; margin-bottom:30px;}
+    .right-panel{width:100%;}
+    .profile-stats{width:100%;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+    <div class="logo">Youth Skilled</div>
+    <div class="nav-links">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="profile.html">Profile</a>
+        <a href="#" id="logoutBtn">Logout</a>
+    </div>
+</nav>
+
+<div class="profile-container">
+    <!-- Left Panel: Avatar and Stats -->
+    <div class="left-panel">
+        <div class="avatar-container">
+            <img id="avatarImg" src="https://via.placeholder.com/120" alt="Profile Avatar">
+            <input type="file" id="avatarInput" accept="image/*">
+        </div>
+        <div class="profile-stats">
+            <p><strong>5</strong> Courses Enrolled</p>
+            <p><strong>3</strong> Certificates Earned</p>
+            <p><strong>80%</strong> Overall Progress</p>
+        </div>
+    </div>
+
+    <!-- Right Panel: Editable Fields -->
+    <div class="right-panel">
+        <h2>My Profile</h2>
+
+        <div class="profile-field">
+            <label for="profileName">Full Name</label>
+            <input type="text" id="profileName" placeholder="Enter your name">
+        </div>
+
+        <div class="profile-field">
+            <label for="profileEmail">Email</label>
+            <input type="email" id="profileEmail" disabled>
+        </div>
+
+        <div class="profile-field">
+            <label for="profilePassword">Password</label>
+            <input type="password" id="profilePassword" placeholder="Enter your new password">
+            <div class="show-password">
+                <input type="checkbox" id="showPass"> Show Password
+            </div>
+        </div>
+
+        <div class="profile-field">
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" id="confirmPassword" placeholder="Confirm your new password">
+        </div>
+
+        <button class="btn" id="saveProfile">Save Changes</button>
+    </div>
+</div>
+
+<div class="toast" id="toastMsg">Profile updated successfully!</div>
+
+<script>
+// LocalStorage keys
+const USERS_KEY = 'ys_users';
+const SESSION_KEY = 'ys_session';
+
+// Get session email
+const sessionEmail = localStorage.getItem(SESSION_KEY);
+if(!sessionEmail){
+    window.location.href = 'login.html';
+}
+
+// Load user data
+let users = JSON.parse(localStorage.getItem(USERS_KEY) || '[]');
+let currentUser = users.find(u => u.email === sessionEmail);
+
+if(currentUser){
+    document.getElementById('profileName').value = currentUser.name;
+    document.getElementById('profileEmail').value = currentUser.email;
+    document.getElementById('profilePassword').value = currentUser.password;
+    document.getElementById('confirmPassword').value = currentUser.password;
+    if(currentUser.avatar){
+        document.getElementById('avatarImg').src = currentUser.avatar;
+    }
+}
+
+// Show password toggle
+document.getElementById('showPass').addEventListener('change', e=>{
+    const type = e.target.checked ? 'text' : 'password';
+    document.getElementById('profilePassword').type = type;
+    document.getElementById('confirmPassword').type = type;
+});
+
+// Avatar upload
+document.getElementById('avatarInput').addEventListener('change', e=>{
+    const file = e.target.files[0];
+    if(file){
+        const reader = new FileReader();
+        reader.onload = function(ev){
+            document.getElementById('avatarImg').src = ev.target.result;
+            currentUser.avatar = ev.target.result;
+            localStorage.setItem(USERS_KEY, JSON.stringify(users));
+        }
+        reader.readAsDataURL(file);
+    }
+});
+
+// Toast notification
+function showToast(message){
+    const toast = document.getElementById('toastMsg');
+    toast.textContent = message;
+    toast.style.display = 'block';
+    setTimeout(()=>toast.style.display = 'none', 3000);
+}
+
+// Save profile
+document.getElementById('saveProfile').addEventListener('click', ()=>{
+    const name = document.getElementById('profileName').value.trim();
+    const password = document.getElementById('profilePassword').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+
+    if(password !== confirmPassword){
+        alert('Passwords do not match');
+        return;
+    }
+
+    currentUser.name = name;
+    currentUser.password = password;
+    localStorage.setItem(USERS_KEY, JSON.stringify(users));
+
+    showToast('Profile updated successfully!');
+});
+
+document.getElementById('logoutBtn').addEventListener('click', ()=>{
+    localStorage.removeItem(SESSION_KEY);
+    window.location.href = 'login.html';
+});
+</script>
+
+</body>
+</html>

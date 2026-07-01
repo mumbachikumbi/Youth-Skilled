@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Youth Skilled - View F.A.Q.</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f2027;
+            --bg-dark2: #203a43;
+            --primary: linear-gradient(90deg, #00f5ff, #00ff88);
+            --accent: #00ff88;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --light-bg: rgba(255, 255, 255, 0.1);
+            --border-radius: 10px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-dark);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Navbar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            position: fixed;
+            width: 100%;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            background: var(--primary);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            white-space: nowrap;
+            position: relative;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            transform: translateY(-2px);
+            text-shadow: 0 0 10px #00ff88, 0 0 15px #00f5ff;
+        }
+
+        /* Content */
+        .content {
+            margin-top: 80px;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: var(--border-radius);
+            margin-bottom: 60px;
+        }
+
+        /* F.A.Q. Section */
+        .faq-section {
+            margin-bottom: 40px;
+        }
+
+        .faq-header {
+            font-size: 26px;
+            margin-bottom: 20px;
+            background: var(--primary);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .faq-item {
+            margin-bottom: 15px;
+            border-radius: var(--border-radius);
+            background: var(--light-bg);
+            padding: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .faq-item:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .faq-question {
+            font-weight: 600;
+            font-size: 18px;
+            margin: 0;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .faq-answer {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            font-size: 16px;
+            color: #bbb;
+        }
+
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo">Youth Skilled</div>
+    <div class="nav-links">
+        <a href="#">Home</a>
+        <a href="#">Dashboard</a>
+        <a href="profile.html">Profile</a>
+        <a href="#">Logout</a>
+    </div>
+</nav>
+
+<div class="content">
+
+    <!-- F.A.Q. Section -->
+    <div class="faq-section">
+        <h2 class="faq-header">Frequently Asked Questions</h2>
+
+        <div class="faq-item" onclick="toggleAnswer('answer1')">
+            <div class="faq-question">What courses do you offer?</div>
+            <div id="answer1" class="faq-answer">
+                We offer a variety of courses in Web Development, AI & Machine Learning, Cyber Security, and Digital Marketing.
+            </div>
+        </div>
+
+        <div class="faq-item" onclick="toggleAnswer('answer2')">
+            <div class="faq-question">How can I enroll in a course?</div>
+            <div id="answer2" class="faq-answer">
+                Simply click on the course you want to enroll in from your dashboard and follow the instructions.
+            </div>
+        </div>
+
+        <div class="faq-item" onclick="toggleAnswer('answer3')">
+            <div class="faq-question">Do you offer certificates?</div>
+            <div id="answer3" class="faq-answer">
+                Yes, we provide certificates upon successful completion of our courses.
+            </div>
+        </div>
+
+        <div class="faq-item" onclick="toggleAnswer('answer4')">
+            <div class="faq-question">What is the course duration?</div>
+            <div id="answer4" class="faq-answer">
+                Course durations vary depending on the course, but typically range from 4 to 12 weeks.
+            </div>
+        </div>
+
+        <div class="faq-item" onclick="toggleAnswer('answer5')">
+            <div class="faq-question">Can I get a refund?</div>
+            <div id="answer5" class="faq-answer">
+                Yes, we offer a 30-day refund policy if you are not satisfied with the course.
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+// F.A.Q. Toggle
+function toggleAnswer(answerId) {
+    const answer = document.getElementById(answerId);
+    answer.style.display = answer.style.display === "none" || answer.style.display === "" ? "block" : "none";
+}
+</script>
+
+</body>
+</html>

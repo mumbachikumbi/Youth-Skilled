@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Youth Skilled - Contact</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body { 
+  font-family:'Poppins', sans-serif; 
+  background:#0f2027; 
+  color:white; 
+  margin:0; 
+  display:flex; 
+  justify-content:center; 
+  align-items:center;
+  min-height:100vh;
+  padding:20px;
+}
+
+.content{
+  max-width:600px; 
+  width:100%;
+  padding:30px; 
+  background:rgba(255,255,255,0.05); 
+  border-radius:10px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.3);
+}
+
+h2{
+  text-align:center;
+  margin-bottom:20px;
+  font-weight:600;
+}
+
+input, textarea, button{
+  width:100%; 
+  padding:12px; 
+  margin-bottom:15px; 
+  border-radius:5px; 
+  border:none; 
+  font-size:16px;
+}
+
+input:focus, textarea:focus{
+  outline:2px solid #00ff88;
+  background:rgba(255,255,255,0.15);
+}
+
+button{
+  background:#00ff88; 
+  color:black; 
+  cursor:pointer; 
+  transition:0.3s; 
+  font-weight:600;
+  position:relative;
+}
+
+button:disabled{
+  opacity:0.6;
+  cursor:not-allowed;
+}
+
+button:hover:not(:disabled){
+  background:#00f5ff; 
+  transform:scale(1.05);
+}
+
+.success-message, .error-message{
+  text-align:center;
+  padding:10px;
+  margin-bottom:15px;
+  border-radius:5px;
+  display:none;
+}
+
+.success-message{
+  background:#00ff88;
+  color:black;
+}
+
+.error-message{
+  background:#ff4d4d;
+  color:white;
+}
+
+@keyframes spinner {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.spinner {
+  border: 3px solid rgba(255,255,255,0.3);
+  border-top: 3px solid black;
+  border-radius: 50%;
+  width:16px;
+  height:16px;
+  animation: spinner 1s linear infinite;
+  display:inline-block;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+}
+</style>
+</head>
+<body>
+
+<div class="content">
+  <h2>Contact Us</h2>
+
+  <div class="success-message" id="successMsg">Message sent successfully!</div>
+  <div class="error-message" id="errorMsg">Failed to send message. Please try again.</div>
+
+  <input type="text" id="nameInput" placeholder="Your Name">
+  <input type="email" id="emailInput" placeholder="Your Email">
+  <textarea id="messageInput" rows="6" placeholder="Your Message"></textarea>
+
+  <button id="sendBtn">Send</button>
+</div>
+
+<!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+(function(){ emailjs.init("m1CIKV2RNa_-rfM6_"); })(); // Public Key
+
+const sendBtn = document.getElementById("sendBtn");
+const successMsg = document.getElementById("successMsg");
+const errorMsg = document.getElementById("errorMsg");
+
+sendBtn.addEventListener("click", function(){
+  // Clear messages
+  successMsg.style.display = "none";
+  errorMsg.style.display = "none";
+
+  const name = document.getElementById("nameInput").value.trim();
+  const email = document.getElementById("emailInput").value.trim();
+  const message = document.getElementById("messageInput").value.trim();
+
+  // Basic validation
+  if(!name || !email || !message){
+    errorMsg.textContent = "Please fill all fields!";
+    errorMsg.style.display = "block";
+    return;
+  }
+
+  const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,6}$/i;
+  if(!emailPattern.test(email)){
+    errorMsg.textContent = "Please enter a valid email!";
+    errorMsg.style.display = "block";
+    return;
+  }
+
+  // Show loading
+  sendBtn.disabled = true;
+  const spinner = document.createElement("span");
+  spinner.classList.add("spinner");
+  sendBtn.textContent = "";
+  sendBtn.appendChild(spinner);
+
+  // Send email
+  emailjs.send("service_xw0mxo9", "template_r0lkez8", {
+    from_name: name,
+    from_email: email,
+    message: message
+  }, "m1CIKV2RNa_-rfM6_")
+  .then(function(){
+    successMsg.style.display = "block";
+    document.getElementById("nameInput").value="";
+    document.getElementById("emailInput").value="";
+    document.getElementById("messageInput").value="";
+  })
+  .catch(function(err){
+    console.error("EmailJS error:", err);
+    errorMsg.textContent = "Failed to send message. Please try again.";
+    errorMsg.style.display = "block";
+  })
+  .finally(function(){
+    // Remove spinner
+    sendBtn.disabled = false;
+    sendBtn.textContent = "Send";
+  });
+
+});
+</script>
+
+</body>
+</html>

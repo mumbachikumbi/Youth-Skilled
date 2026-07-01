@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Youth Skilled - Skills Marketplace</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root{
+            --bg-dark:#0f2027;
+            --bg-dark2:#203a43;
+            --bg-dark3:#2c5364;
+            --primary:linear-gradient(90deg,#00f5ff,#00ff88);
+            --subtle-bg:#354d61; /* Even more subtle background for notices */
+            --highlight-color:#00ff88; /* Highlight color for links and buttons */
+        }
+        *{box-sizing:border-box;}
+        body{
+            margin:0;
+            font-family:'Poppins',sans-serif;
+            background:linear-gradient(135deg,var(--bg-dark),var(--bg-dark2),var(--bg-dark3));
+            color:white;
+            overflow-x:hidden;
+        }
+
+        /* NAVBAR */
+        nav{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:20px 8%;
+            position:fixed;
+            width:100%;
+            backdrop-filter:blur(10px);
+            background:rgba(255,255,255,0.05);
+            border-bottom:1px solid rgba(255,255,255,0.1);
+            z-index:1000;
+        }
+        .logo{
+            font-size:22px;
+            font-weight:700;
+            background:var(--primary);
+            -webkit-background-clip:text;
+            color:transparent;
+        }
+        .nav-links{
+            display:flex;
+            gap:25px;
+        }
+        .nav-links a{
+            text-decoration:none;
+            color:white;
+            font-weight:500;
+            white-space:nowrap;
+        }
+        .nav-links a:hover{
+            transform: translateY(-3px);
+            color: var(--highlight-color);
+            text-shadow: 0 0 10px var(--highlight-color), 0 0 15px #00f5ff;
+        }
+
+        /* HERO */
+        .hero{
+            height:35vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            text-align:center;
+            padding:0 10%;
+            padding-top:80px; /* offset for fixed navbar */
+        }
+        .hero h1{
+            font-size:36px;
+            background:var(--primary);
+            -webkit-background-clip:text;
+            color:transparent;
+        }
+        .hero p{
+            margin-top:15px;
+            font-size:16px;
+            opacity:0.85;
+        }
+
+        /* SKILLS FILTER */
+        #skills-filter{
+            padding:20px 10%;
+            text-align:center;
+        }
+        #skills-filter h2{
+            font-size:28px;
+            margin-bottom:15px;
+        }
+        .filters{
+            margin-top:10px;
+        }
+        .filters input{
+            width:250px;
+            padding:10px 15px;
+            border-radius:10px;
+            border:none;
+            font-family:'Poppins',sans-serif;
+            font-size:14px;
+        }
+        .filters input:focus{
+            outline:none;
+            box-shadow:0 0 10px #00f5ff;
+        }
+
+        /* SKILLS CARDS */
+        .cards{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+            gap:20px;
+            padding:0 10%;
+            margin-bottom:60px;
+        }
+        .card{
+            padding:15px;
+            border-radius:15px;
+            background:rgba(255,255,255,0.05);
+            backdrop-filter:blur(10px);
+            border:1px solid rgba(255,255,255,0.1);
+            cursor:pointer;
+        }
+        .card h3{
+            margin-bottom:8px;
+            font-size:18px;
+        }
+        .card p{
+            opacity:0.8;
+            font-size:14px;
+        }
+
+        /* BUTTON STYLES */
+        .btn{
+            background: var(--primary);
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 12px 25px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .btn:hover{
+            background: #00ff88;
+            box-shadow: 0 0 10px #00f5ff;
+        }
+
+        /* FOOTER */
+        footer{
+            text-align:center;
+            padding:40px 10%;
+            background:rgba(0,0,0,0.3);
+            border-top:1px solid rgba(255,255,255,0.1);
+        }
+        footer .footer-content{
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            gap:10px;
+        }
+        footer .social-icons{
+            display:flex;
+            gap:20px;
+        }
+        footer .social-icons a{
+            color:white;
+            font-size:20px;
+            transition: all 0.3s ease;
+        }
+        footer .social-icons a:hover{
+            color:var(--highlight-color);
+            transform: translateY(-3px);
+            text-shadow:0 0 10px var(--highlight-color),0 0 15px #00f5ff;
+        }
+
+        /* MOBILE */
+        @media(max-width:768px){
+            .hero h1{font-size:28px;}
+            .cards{grid-template-columns:1fr;}
+        }
+
+        /* SPECIAL NOTIFICATION */
+        .self-listing-notice {
+            background: var(--subtle-bg);
+            color: white;
+            padding: 10px;
+            font-size: 14px;
+            margin-top: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            display: inline-block;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .self-listing-notice a {
+            color: var(--highlight-color);
+            text-decoration: underline;
+            font-weight: normal;
+        }
+
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo">Youth Skilled</div>
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="#skills-section">Skills</a>
+        <a href="#contact">Contact</a>
+    </div>
+</nav>
+
+<div class="hero">
+    <div>
+        <h1>Discover Certified Skills</h1>
+        <p>Connect with Zambian talent instantly.</p>
+    </div>
+</div>
+
+<!-- SKILLS FILTER -->
+<section id="skills-filter">
+    <h2>Find Your Skill</h2>
+    <div class="filters">
+        <input type="text" id="search-input" placeholder="Search by skill">
+    </div>
+
+    <!-- Notice at the top for non-course providers (Subtle and Aesthetic) -->
+    <div class="self-listing-notice">
+        Not a course graduate but want to showcase your skills? <a href="self-listing.html">Click here</a> to list your services!
+    </div>
+</section>
+
+<!-- SKILLS CARDS -->
+<section id="skills-section">
+    <div class="cards" id="skills-cards"></div>
+</section>
+
+<!-- Button for Non-Course Providers to List Services -->
+<div class="self-listing-notice">
+    Are you not a course graduate but want to showcase your skills? <a href="self-listing.html">List your services here!</a>
+</div>
+
+<footer id="contact">
+  <div class="footer-content">
+    © 2026 Youth Skilled. All Rights Reserved.
+    <div class="social-icons">
+      <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+      <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Skills Data
+const skillsData = [
+    "Graphic Design", "CV Writing", "Plumbing", "Solar Installation", "Virtual Assistance",
+    "House Painting", "Social Media Management", "Data Entry", "Electrical Work", "Carpentry",
+    "Green Solutions", "Baking", "Salon Services", "Tailoring", "Tutoring"
+];
+
+// Render Skills Cards
+function renderCards() {
+    const container = document.getElementById("skills-cards");
+    container.innerHTML = "";
+    const searchInput = document.getElementById("search-input").value.toLowerCase();
+
+    skillsData.filter(skill => skill.toLowerCase().includes(searchInput))
+    .forEach(skill => {
+        const card = document.createElement("div");
+        card.classList.add("card");
+        card.innerHTML = `
+            <h3>${skill}</h3>
+            <p>Click to view certified providers for this skill</p>
+        `;
+        card.addEventListener("click", () => { 
+            window.location.href = `providers.html?skill=${encodeURIComponent(skill)}`;
+        });
+        container.appendChild(card);
+    });
+}
+
+document.getElementById("search-input").addEventListener("input", renderCards);
+renderCards();
+</script>
+
+</body>
+</html>
