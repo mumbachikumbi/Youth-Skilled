@@ -271,19 +271,18 @@ footer .social-icons a:hover{
 <nav>
 <div class="logo">Youth Skilled</div>
 <div class="nav-links">
-<a href="#courses">Courses</a>
-<a href="#marketplace">Marketplace</a>
-<a href="#companies">Companies</a>
+<a href="#home">Home</a>
+<a href="#values">Values</a>
+<a href="#statistics">Statistics</a>
 <a href="#certificates">Certificates</a>
-<a href="#impact">Impact</a>
 <a href="#contact">Contact</a>
 </div>
 </nav>
 
-<div class="hero">
+<div id="home"class="hero">
 <div>
-<h1>Empowering Future Skills</h1>
-<p>Youth Skilled trains, certifies, and connects talent to real paying clients across Zambia.</p>
+<h1>Turning Skills Into Opportunity</h1>
+<p>Youth Skilled trains, certifies and connects talent to real paying clients across Zambia.</p>
 
 <div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap;">
 </div>
@@ -293,39 +292,19 @@ footer .social-icons a:hover{
 
 <!-- COURSES (SHOW ONLY 3) -->
 <section id="courses">
-<h2 class="section-title">Our Courses</h2>
+<h2 id="values" class="section-title">Our Values</h2>
 <div class="cards">
-<div class="card"><h3>🌐 Web Development</h3><p>Master frontend and backend technologies to build real-world applications.</p></div>
-<div class="card"><h3>🤖 Artificial Intelligence</h3><p>Learn machine learning, data science and AI engineering fundamentals.</p></div>
-<div class="card"><h3>🔐 Cyber Security</h3><p>Protect digital systems and master ethical hacking techniques.</p></div>
+<div class="card"><h3>🌍 Opportunity</h3><p>We believe opportunity should never be limited by circumstance.
+ Every young person deserves the chance to turn their skills into sustainable livelihoods, regardless of their 
+ educational background, financial situation, or where they come from.</p></div>
+<div class="card"><h3>🤝 Trust</h3><p>Trust creates opportunity. We are committed to building confidence between
+ skilled professionals, clients and businesses through transparent profiles, competency based verification, honest
+ reviews and quality standards that recognize ability over assumptions.</p></div>
+<div class="card"><h3>🚀 Empowerment</h3><p>We empower people to create their own futures. Rather than simply preparing young
+ people for employment, we equip them with the knowledge, credibility and opportunities to earn, build businesses and 
+ contribute meaningfully to their communities.</p></div>
 </div>
 <div style="text-align:center;margin-top:20px;">
-<a href="courses.html"><button class="btn">View All Courses</button></a>
-</div>
-</section>
-
-<!-- MARKETPLACE (SHOW ONLY 3 SKILLS) -->
-<section id="marketplace">
-<h2 class="section-title">Hire Certified Talent</h2>
-<div class="cards">
-  <div class="card">
-    <h3>🎨 Graphic Designers</h3>
-    <p>Browse certified creatives for branding and design services.</p>
-    <a href="skills.html"><button class="btn">Browse</button></a>
-  </div>
-  <div class="card">
-    <h3>💻 Web Developers</h3>
-    <p>Hire verified developers ready to build websites.</p>
-    <a href="skills.html"><button class="btn">Browse</button></a>
-  </div>
-  <div class="card">
-    <h3>🔌 Electricians & Solar Installers</h3>
-    <p>Certified professionals for residential and commercial work.</p>
-    <a href="skills.html"><button class="btn">Browse</button></a>
-  </div>
-</div>
-<div style="text-align:center;margin-top:20px;">
-  <a href="skills.html"><button class="btn">View All Skills</button></a>
 </div>
 </section>
 
@@ -339,31 +318,17 @@ footer .social-icons a:hover{
 </div>
 </section>
 
-<!-- EMPLOYERS -->
-<section id="companies">
-<h2 class="section-title">Corporate Services</h2>
-<div class="cards">
-<div class="card"><h3>🏢 Employee Training</h3><p>Structured training programs to upskill your workforce quickly.</p></div>
-<div class="card"><h3>💼 Talent Pipeline</h3><p>Access verified, job-ready youth for your hiring needs.</p></div>
-<div class="card"><h3>🎯 Custom Cohorts</h3><p>Design bespoke programs for your company or NGO with verifiable outcomes.</p></div>
-</div>
-</section>
-
 <!-- IMPACT -->
-<section id="impact">
-<h2 class="section-title">Our Impact</h2>
+<section id="statistics" id="impact">
+<h2 class="section-title">Interesting Statistics</h2>
 <div class="metrics">
-<div><div class="metric" data-target="40">0</div><div class="metric-label">Students Trained: Through EmpowerLab Zambia, 
-a 2-day workshop where young girls learnt the basics of HTML and CSS in relation to climate action and with the aid of the old Youth Skilled Website.</div></div>
-<div><div class="metric" data-target="3">0</div><div class="metric-label">Companies Engaged : Girl Up, Global Fund for Children and UN Foundation</div></div>
-<div><div class="metric" data-target="40">0</div><div class="metric-label">Certificates Issued: Each participant received an official certificate on the 
-closing ceremony.</div></div>
-
+<div><div class="metric" data-target="5293119">0</div><div class="metric-label">Youth Total Popoulation aged 19–34</div></div>
+<div><div class="metric" data-target="2818259">0</div><div class="metric-label"> Zambians aged 19–34 are not in employment, education, or training</div></div>
 </div>
 </section>
 
 <!-- CHAT -->
-<section id="chat-faq">
+<section id="contact" id="chat-faq">
 <h2 class="section-title">Chat with Us or Visit Our F.A.Q.</h2>
 <div class="cards">
 <div class="card"><h3>Have questions? Ask us directly!</h3><p>If you're having trouble, don't hesitate to ask. Our team is here to help!</p><button class="btn" id="start-chat-btn">Start Chat</button></div>
@@ -544,26 +509,37 @@ particlesContainer.appendChild(particle);
 }
 
 // Metrics counters
-const metrics=document.querySelectorAll('.metric');
-metrics.forEach(metric=>{
-const updateCount=()=>{
-const target=+metric.getAttribute('data-target');
-let count=+metric.innerText;
-const increment=Math.ceil(target/200);
-if(count<target){
-metric.innerText=count+increment;
-setTimeout(updateCount,20);
-}else{metric.innerText=target;}
-};
-const observerMetric=new IntersectionObserver(entries=>{
-if(entries[0].isIntersecting){
-updateCount();
-observerMetric.disconnect();
-}
-},{threshold:0.5});
-observerMetric.observe(metric);
-});
+// Metrics counters
+const metrics = document.querySelectorAll(".metric");
 
+metrics.forEach(metric => {
+    const target = Number(metric.dataset.target); // Read target number
+    let current = 0;
+
+    const updateCount = () => {
+        const increment = Math.ceil(target / 200);
+
+        if (current < target) {
+            current = Math.min(current + increment, target);
+
+            // Display number with commas
+            metric.innerText = current.toLocaleString();
+
+            setTimeout(updateCount, 20);
+        } else {
+            metric.innerText = target.toLocaleString();
+        }
+    };
+
+    const observerMetric = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) {
+            updateCount();
+            observerMetric.disconnect();
+        }
+    }, { threshold: 0.5 });
+
+    observerMetric.observe(metric);
+});
 // Chat and FAQ buttons
 document.getElementById('start-chat-btn').addEventListener('click',()=>{window.location.href="chat-faq.html";});
 document.getElementById('faq-btn').addEventListener('click',()=>{window.location.href="faq.html";});
